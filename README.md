@@ -1,4 +1,4 @@
-# Amrit Tiwari - Portfolio
+# Amrit Tiwari 
 
 Personal portfolio and interactive dashboard built with React, TypeScript, Vite, and Tailwind CSS.
 
