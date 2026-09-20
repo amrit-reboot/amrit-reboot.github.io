@@ -44,7 +44,7 @@ export function RightWidgets() {
       <div className="shrink-0 bg-[#1C252B] p-6 rounded-[24px] flex flex-col relative overflow-hidden border border-[#2D3A44] shadow-xl">
         <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1542273917363-3b1817f69a5d?q=80&w=600')] bg-cover bg-center"></div>
         <div className="relative z-10 text-white font-mono text-xs opacity-80 leading-relaxed">
-          Better<br/>Hardware.<br/>Brighter<br/>Tomorrows.<br/>—
+          Better<br/>Hardware.<br/>Brighter<br/>Tomorrow.<br/>—
         </div>
       </div>
 
