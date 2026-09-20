@@ -14,7 +14,7 @@ export function HomeView({ setActiveTab }: HomeViewProps) {
       <div className="shrink-0 bg-dash-card dark:bg-dash-darkcard p-6 md:p-8 rounded-[24px] flex justify-between shadow-neumorphic dark:shadow-neumorphic-dark border border-dash-border dark:border-dash-darkborder relative overflow-hidden">
         <div className="relative z-10">
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-dash-orange mb-2">I'm Amrit.</h1>
-          <h2 className="text-lg md:text-xl font-medium mb-1">Electrical Engineer | Builder | Learner</h2>
+          <h2 className="text-lg md:text-xl font-medium mb-1">19 | Sophomore | Learner</h2>
           <p className="text-dash-muted dark:text-dash-darkmuted mb-6 md:mb-8 text-sm">Exploring hardware, systems and the in-between.</p>
           <div className="flex flex-wrap gap-3 md:gap-4">
             <button 
