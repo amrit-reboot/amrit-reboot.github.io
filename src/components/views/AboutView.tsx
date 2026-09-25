@@ -5,6 +5,20 @@ interface AboutViewProps {
   setActiveTab: (tab: TabType) => void;
 }
 
+export function AboutContent() {
+  return (
+    <div className="space-y-6 text-lg leading-relaxed max-w-3xl lowercase">
+      <p>hey</p>
+      <p>i’m a pretty curious guy who likes talking to people and hearing different takes on things.</p>
+      <p>lately i’ve been deep into <strong className="text-dash-orange">VLSI, digital design and semiconductors.</strong></p>
+      <p>love pulling hardware apart and bringing ideas to life with Verilog and KiCad.<br/>
+      at the same time i’m big on building communities — been running events and ops while studying.</p>
+      <p>for me it just comes down to learning fast and making stuff that works,<br/>
+      whether that’s a PCB or some campus-wide thing.</p>
+    </div>
+  );
+}
+
 export function AboutView({ setActiveTab }: AboutViewProps) {
   const coreDomains = [
     'Digital Logic', 'RISC-V', 'Verilog', 'FPGA', 
@@ -12,7 +26,7 @@ export function AboutView({ setActiveTab }: AboutViewProps) {
   ];
 
   return (
-    <div className="shrink-0 bg-dash-card dark:bg-dash-darkcard p-6 md:p-10 rounded-[24px] border border-dash-border dark:border-dash-darkborder shadow-neumorphic dark:shadow-neumorphic-dark animate-[fadeIn_0.3s_ease-out] flex flex-col gap-8">
+    <div className="bg-dash-card dark:bg-dash-darkcard p-6 md:p-10 rounded-[24px] border border-dash-border dark:border-dash-darkborder shadow-neumorphic dark:shadow-neumorphic-dark animate-[fadeIn_0.3s_ease-out] flex flex-col gap-8">
       <div className="border-b border-dash-border dark:border-dash-darkborder pb-6">
         <div className="flex items-center gap-2 text-[10px] font-bold text-dash-orange uppercase tracking-widest mb-2">
           <User size={14} /> About Me
@@ -24,19 +38,8 @@ export function AboutView({ setActiveTab }: AboutViewProps) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="md:col-span-2 space-y-4 text-sm leading-relaxed text-dash-muted dark:text-dash-darkmuted">
-          <p>
-            I'm a highly curious, naturally jovial guy who loves striking up conversations and hearing fresh perspectives.
-          </p>
-          <p>
-            Lately, I've developed a serious focus on VLSI, digital design, and semiconductors.
-          </p>
-          <p>
-            I love pulling apart the intricacies of hardware and bringing concepts to life using tools like Verilog and KiCad. But I'm equally passionate about building communities. I've headed up events and operations along with my academic journey.
-          </p>
-          <p>
-            For me, it all comes down to learning quickly and building practical solutions—whether that's a PCB layout or a campus-wide initiative.
-          </p>
+        <div className="md:col-span-2 space-y-6">
+          <AboutContent />
 
           <div className="pt-4 flex flex-wrap gap-4">
             <button 
@@ -77,4 +80,3 @@ export function AboutView({ setActiveTab }: AboutViewProps) {
     </div>
   );
 }
-export const AboutContent = AboutView;
