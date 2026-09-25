@@ -7,14 +7,14 @@ interface AboutViewProps {
 
 export function AboutContent() {
   return (
-    <div className="space-y-6 text-lg leading-relaxed max-w-3xl lowercase">
+    <div className="space-y-6 text-lg leading-relaxed max-w-3xl">
       <p>hey</p>
       <p>i’m a pretty curious guy who likes talking to people and hearing different takes on things.</p>
-      <p>lately i’ve been deep into <strong className="text-dash-orange">VLSI, digital design and semiconductors.</strong></p>
-      <p>love pulling hardware apart and bringing ideas to life with Verilog and KiCad.<br/>
+      <p>lately i’ve been deep into <strong className="text-dash-orange">vlsi, digital design and semiconductors.</strong></p>
+      <p>love pulling hardware apart and bringing ideas to life with verilog and kicad.<br/>
       at the same time i’m big on building communities — been running events and ops while studying.</p>
       <p>for me it just comes down to learning fast and making stuff that works,<br/>
-      whether that’s a PCB or some campus-wide thing.</p>
+      whether that’s a pcb or some campus-wide thing.</p>
     </div>
   );
 }

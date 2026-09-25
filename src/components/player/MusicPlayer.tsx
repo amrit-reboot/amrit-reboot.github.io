@@ -7,38 +7,82 @@ export function MusicPlayer() {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Example playlist - easily expandable
+  const base = import.meta.env.BASE_URL.endsWith('/')
+    ? import.meta.env.BASE_URL
+    : `${import.meta.env.BASE_URL}/`;
+
   const playlist = [
     {
-      title: "Daft Punk - Get Lucky",
-      subtitle: "Official Audio ft. Pharrell Williams",
-      src: "Daft Punk - Get Lucky (Official Audio) ft. Pharrell Williams, Nile Rodgers.mp3"
+      title: "Get Lucky",
+      subtitle: "Daft Punk ft. Pharrell Williams",
+      src: `${base}audio/get-lucky.mp3`
     },
-    // Add more tracks here if needed
     {
-      title: "Second Track Placeholder",
-      subtitle: "Update src to your local file",
-      src: "track2.mp3" 
+      title: "At The Door",
+      subtitle: "The Strokes",
+      src: `${base}audio/at-the-door.mp3`
+    },
+    {
+      title: "Somethin' Stupid",
+      subtitle: "Frank & Nancy Sinatra",
+      src: `${base}audio/somethin-stupid.mp3`
+    },
+    {
+      title: "Deslocado",
+      subtitle: "NAPA",
+      src: `${base}audio/deslocado.mp3`
+    },
+    {
+      title: "Dil Toh Baccha Hai Ji",
+      subtitle: "Rahat Fateh Ali Khan",
+      src: `${base}audio/dil-toh-baccha-hai.mp3`
+    },
+    {
+      title: "Thinkin Bout You",
+      subtitle: "Frank Ocean",
+      src: `${base}audio/thinkin-bout-you.mp3`
+    },
+    {
+      title: "Mile Jo Sukoon",
+      subtitle: "Raghu Khosla",
+      src: `${base}audio/mile-jo-sukoon.mp3`
+    },
+    {
+      title: "Can't Take My Eyes Off You",
+      subtitle: "Lauryn Hill",
+      src: `${base}audio/cant-take-my-eyes-off-you.mp3`
     }
   ];
 
   const currentTrack = playlist[currentTrackIndex];
+  const isInitialMount = useRef(true);
 
   // Auto-play when skipping tracks IF it was already playing
   useEffect(() => {
-    if (isPlaying && audioRef.current) {
-      audioRef.current.play().catch((err) => console.log("Audio play interrupted:", err));
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
     }
-  }, [currentTrackIndex, isPlaying]);
+    if (audioRef.current) {
+      audioRef.current.load();
+      if (isPlaying) {
+        audioRef.current.play().catch((err) => console.log("Audio play interrupted:", err));
+      }
+    }
+  }, [currentTrackIndex]);
 
   const togglePlay = () => {
     if (!audioRef.current) return;
     if (isPlaying) {
       audioRef.current.pause();
+      setIsPlaying(false);
     } else {
-      audioRef.current.play().catch(console.error);
+      audioRef.current.play().then(() => {
+        setIsPlaying(true);
+      }).catch((err) => {
+        console.error("Audio playback error:", err);
+      });
     }
-    setIsPlaying(!isPlaying);
   };
 
   const handleNext = () => {
@@ -49,6 +93,15 @@ export function MusicPlayer() {
     setCurrentTrackIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
   };
 
+  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!audioRef.current || !audioRef.current.duration) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const fraction = Math.max(0, Math.min(1, clickX / rect.width));
+    audioRef.current.currentTime = fraction * audioRef.current.duration;
+    setProgress(fraction * 100);
+  };
+
   const updateProgress = () => {
     if (audioRef.current && audioRef.current.duration) {
       setProgress((audioRef.current.currentTime / audioRef.current.duration) * 100);
@@ -57,7 +110,7 @@ export function MusicPlayer() {
 
   // Format time in mm:ss
   const formatTime = (timeInSeconds: number) => {
-    if (isNaN(timeInSeconds)) return "00:00";
+    if (isNaN(timeInSeconds) || timeInSeconds <= 0) return "00:00";
     const m = Math.floor(timeInSeconds / 60).toString().padStart(2, '0');
     const s = Math.floor(timeInSeconds % 60).toString().padStart(2, '0');
     return `${m}:${s}`;
@@ -92,7 +145,10 @@ export function MusicPlayer() {
       </div>
 
       <div>
-        <div className="h-1 bg-dash-border dark:bg-dash-darkborder rounded-full overflow-hidden mb-1">
+        <div 
+          onClick={handleSeek}
+          className="h-1 bg-dash-border dark:bg-dash-darkborder rounded-full overflow-hidden mb-1 cursor-pointer"
+        >
           <div className="h-full bg-dash-orange rounded-full transition-all duration-100" style={{ width: `${progress}%` }}></div>
         </div>
         <div className="flex justify-between text-[9px] font-mono text-dash-muted">
@@ -105,6 +161,7 @@ export function MusicPlayer() {
         ref={audioRef} 
         src={currentTrack.src}
         onTimeUpdate={updateProgress} 
+        onLoadedMetadata={updateProgress}
         onEnded={handleNext} // Auto-play next track when finished
       />
     </div>
